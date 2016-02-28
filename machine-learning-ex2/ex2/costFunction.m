@@ -14,10 +14,8 @@ w=log(v).*(y.*-1)-(1-y).*log(1-v);
 J=sum(w)/m;
 
 
-grad = zeros(size(theta));
-grad(1) =sum((v-y).*X(:,1))*(1/m);
-grad(2)=sum((v-y).*X(:,2))*(1/m);
-grad(3)=sum((v-y).*X(:,3))*(1/m);
+grad =((v-y)'*X)*(1/m);
+
 % ====================== YOUR CODE HERE ======================
 % Instructions: Compute the cost of a particular choice of theta.
 %               You should set J to the cost.
