@@ -9,7 +9,6 @@ m = length(y); % number of training examples
 
 % You need to return the following variables correctly 
 J = 0;
-grad = zeros(size(theta));
 
 
 % ====================== YOUR CODE HERE ======================
@@ -21,21 +20,19 @@ grad = zeros(size(theta));
 
 o=(theta'*X')';
 v=sigmoid(o);
-w=log(v).*(y.*-1)-(1-y).*log(1-v);
-
-
-J=sum(w)/m 
+w=sum(log(v).*(y.*-1)-(1-y).*log(1-v))/m;
 regular=((sum(theta.^2)-(theta(1)^2))*(lambda/(2*m)));
-
-J=J+regular;
+J=w+regular;
 
 grad = zeros(size(theta));
+%grad(1) =sum((v-y).*(1/m));
+grad=(((v-y)'*X)*(1/m))';
+grad=grad+(lambda/m)*theta;
 grad(1) =sum((v-y).*(1/m));
-
-for i=2:size(theta)
-    grad(i) =sum((v-y).*X(:,i))*(1/m)+(lambda/m)*theta(i) ;
-
-end
+%for i=2:size(theta)
+%    grad(i) =grad(i)+(lambda/m)*theta(i) ;
+%end
+%x=grad
 %grad = zeros(size(theta));
 %grad(1) =sum((v-y).*X(:,1))*(1/m);
 %grad(2)=sum((v-y).*X(:,2))*(1/m);
