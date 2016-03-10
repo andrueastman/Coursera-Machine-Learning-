@@ -30,6 +30,26 @@ J = 0;
 Theta1_grad = zeros(size(Theta1));
 Theta2_grad = zeros(size(Theta2));
 
+X = [ones(m, 1) X]; %add ones to the X matrix
+a=(Theta1*X')';
+a=sigmoid(a);
+
+a = [ones(size(a,1), 1) a]; %add ones to the a mata = [ones(size(a,1), 1) a]; %add ones to the a matrixrix
+b=a*Theta2';
+result=sigmoid(b);%output layer h of x
+
+fra=zeros(length(y),num_labels);
+for i=1:length(y)
+    fra(i,y(i))=1;
+end
+
+final=((-1*log(result).*fra)-((1-fra).*log(1-result)));
+
+firstSum=sum(final,2);
+secondSum=sum(firstSum);
+J=secondSum/m;                  % cost function without regularization :)
+
+
 % ====================== YOUR CODE HERE ======================
 % Instructions: You should complete the code by working through the
 %               following parts.

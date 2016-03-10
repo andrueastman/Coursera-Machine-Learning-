@@ -9,16 +9,15 @@ num_labels = size(Theta2, 1);
 
 % You need to return the following variables correctly 
 p = zeros(size(X, 1), 1);
+
 X = [ones(m, 1) X]; %add ones to the X matrix
-
 a=(Theta1*X')';
-
 a=sigmoid(a);
+
 a = [ones(size(a,1), 1) a]; %add ones to the a mata = [ones(size(a,1), 1) a]; %add ones to the a matrixrix
 b=a*Theta2';
-
-
 b=sigmoid(b);
+
 
 [and,rew]=max(b, [], 2);
 
