@@ -10,7 +10,12 @@ function W = randInitializeWeights(L_in, L_out)
 %
 
 % You need to return the following variables correctly 
+epsilon_init = 0.12;
 W = zeros(L_out, 1 + L_in);
+
+W= rand(L_out,1+L_in)*2*epsilon_init-epsilon_init;
+eps=(6^0.5)/((L_out+L_in)^0.5)
+
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Initialize W randomly so that we break the symmetry while

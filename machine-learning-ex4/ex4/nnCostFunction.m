@@ -22,9 +22,17 @@ Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), ...
 Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):end), ...
                  num_labels, (hidden_layer_size + 1));
 
+xa=sum(sum((Theta1.^2),2)-(Theta1(:,1).^2));
+
+xb=sum(sum((Theta2.^2),2)-(Theta2(:,1).^2));
+
+
+
 % Setup some useful variables
 m = size(X, 1);
-         
+
+regular=(xa+xb)*(lambda/(2*m));
+
 % You need to return the following variables correctly 
 J = 0;
 Theta1_grad = zeros(size(Theta1));
@@ -47,7 +55,7 @@ final=((-1*log(result).*fra)-((1-fra).*log(1-result)));
 
 firstSum=sum(final,2);
 secondSum=sum(firstSum);
-J=secondSum/m;                  % cost function without regularization :)
+J=(secondSum/m)+regular;                  % cost function without regularization :)
 
 
 % ====================== YOUR CODE HERE ======================
