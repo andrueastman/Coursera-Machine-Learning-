@@ -58,6 +58,38 @@ secondSum=sum(firstSum);
 J=(secondSum/m)+regular;                  % cost function without regularization :)
 
 
+
+accumulated_g_1=zeros(size(Theta1));
+accumulated_g_2=zeros(size(Theta2));
+%back propagations
+for i=1:m
+    z_2=Theta1*(X(i,:)');%input matrix already has ones appended to it
+    a_2=[1;sigmoid(z_2)];
+    z_3=Theta2*a_2;
+    a_3=sigmoid(z_3);
+    
+    delta_3=a_3-fra(i,:)';
+    %Theta2new=Theta2(:,2:end);
+    %rs=Theta2new'*delta_3;
+    %delta_2=rs.*sigmoidGradient(z_2);
+    %sigmoidGradient(z_2)
+    delta_2=(Theta2'*delta_3).*[1;sigmoidGradient(z_2)];
+    delta_2=delta_2(2:end);
+    
+    accumulated_g_1=accumulated_g_1+(delta_2*X(i,:));
+    accumulated_g_2=accumulated_g_2+(delta_3*a_2');
+end
+
+
+accumulated_g_1=accumulated_g_1.*(1/m);
+accumulated_g_2=accumulated_g_2.*(1/m);
+
+
+
+%regularization
+accumulated_g_1(:,2:end)=accumulated_g_1(:,2:end)+(lambda/m)*Theta1(:,2:end);
+accumulated_g_2(:,2:end)=accumulated_g_2(:,2:end)+(lambda/m)*Theta2(:,2:end);
+
 % ====================== YOUR CODE HERE ======================
 % Instructions: You should complete the code by working through the
 %               following parts.
@@ -113,7 +145,7 @@ J=(secondSum/m)+regular;                  % cost function without regularization
 % =========================================================================
 
 % Unroll gradients
-grad = [Theta1_grad(:) ; Theta2_grad(:)];
+grad = [accumulated_g_1(:) ; accumulated_g_2(:)];
 
 
 end
