@@ -27,7 +27,7 @@ error=1;
 x=1;yi=1;
 for i = 1:length(lambda_vec)
     for j = 1:length(lambda_vec)
-        model= svmTrain(X, y, i, @(x1, x2) gaussianKernel(x1, x2, j));
+        model= svmTrain(X, y, lambda_vec(i), @(x1, x2) gaussianKernel(x1, x2, lambda_vec(j)));
         predictions = svmPredict(model, Xval);
         min=mean(double(predictions ~= yval));
         if min<error
